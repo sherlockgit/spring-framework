@@ -216,6 +216,9 @@ final class AnnotationTypeMapping {
 		return (attributeType == targetType || attributeType == targetType.getComponentType());
 	}
 
+	/**
+	 * 取出当前注解的所有方法，找到是否有已该方法作为别名的注解方法
+	 */
 	private void processAliases() {
 		List<Method> aliases = new ArrayList<>();
 		for (int i = 0; i < this.attributes.size(); i++) {
@@ -228,6 +231,10 @@ final class AnnotationTypeMapping {
 		}
 	}
 
+	/**
+	 * 根据@AliasFor注解别名找到所对应的注解方法
+	 * @param aliases 别名
+	 */
 	private void collectAliases(List<Method> aliases) {
 		AnnotationTypeMapping mapping = this;
 		while (mapping != null) {
@@ -242,7 +249,13 @@ final class AnnotationTypeMapping {
 		}
 	}
 
+	/**
+	 *
+	 * @param attributeIndex 别名方法
+	 * @param aliases 该方法的下标
+	 */
 	private void processAliases(int attributeIndex, List<Method> aliases) {
+		//该别名方法在root中的下标，若没有则为-1
 		int rootAttributeIndex = getFirstRootAttributeIndex(aliases);
 		AnnotationTypeMapping mapping = this;
 		while (mapping != null) {
@@ -619,6 +632,8 @@ final class AnnotationTypeMapping {
 
 
 	/**
+	 * 实例的集合，提供所有已定义镜像的详细信息。
+	 *
 	 * A collection of {@link MirrorSet} instances that provides details of all
 	 * defined mirrors.
 	 */
@@ -629,6 +644,7 @@ final class AnnotationTypeMapping {
 		private final MirrorSet[] assigned;
 
 		MirrorSets() {
+			//该注解所有方法个数
 			this.assigned = new MirrorSet[attributes.size()];
 			this.mirrorSets = EMPTY_MIRROR_SETS;
 		}
