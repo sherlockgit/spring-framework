@@ -319,6 +319,7 @@ final class TypeMappedAnnotations implements MergedAnnotations {
    				if (annotation != null) {
 					Class<? extends Annotation> type = annotation.annotationType();
 					if (type != null && !this.annotationFilter.matches(type)) {
+						//当前注解是Conditional时直接返回true
 						if (type == requiredType || type.getName().equals(requiredType)) {
 							return Boolean.TRUE;
 						}
@@ -332,6 +333,7 @@ final class TypeMappedAnnotations implements MergedAnnotations {
 							}
 						}
 						if (!this.directOnly) {
+							//解析当前注解并构建AnnotationTypeMappings 包含@AliasFor的合格性校验
 							AnnotationTypeMappings mappings = AnnotationTypeMappings.forAnnotationType(type);
 							for (int i = 0; i < mappings.size(); i++) {
 								AnnotationTypeMapping mapping = mappings.get(i);

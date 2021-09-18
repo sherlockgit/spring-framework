@@ -71,6 +71,7 @@ final class AnnotationTypeMappings {
 
 
 	private void addAllMappings(Class<? extends Annotation> annotationType) {
+		//Deque双端队列
 		Deque<AnnotationTypeMapping> queue = new ArrayDeque<>();
 		addIfPossible(queue, null, annotationType, null);
 		while (!queue.isEmpty()) {
